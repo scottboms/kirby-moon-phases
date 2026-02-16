@@ -8,7 +8,7 @@ A Kirby 5 plugin that provides moon phase information as a custom Panel Section 
 ## Features
 
 - Current moon phase name
-- Number of day until the next full moon
+- Number of days until the next full moon
 - Number of days until the next new moon
 - API-backed phase/illumination data (ipgeolocation.io astronomy endpoint)
 - Configurable cache
