@@ -1,8 +1,9 @@
 .moon-phase-card {
-  border: 1px solid var(--color-border);
-  border-radius: var(--rounded);
+  /*border: 1px solid var(--color-border);*/
+  border-radius: var(--rounded-lg);
   padding: 1rem;
-  background: var(--color-gray-100);
+  background: light-dark(var(--color-white), var(--color-gray-850));
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 0px, rgba(0, 0, 0, 0.125) 0px 1px 2px 0px;
 }
 
 .current-moon-phase {

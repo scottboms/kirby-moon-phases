@@ -110,6 +110,13 @@ You can use the following site helper methods in your templates. Use `1` or `0` 
 
 `$site->moonPhaseIcon()` returns an SVG string you can render in templates.
 
+### Convenience Snippet
+
+A convenience snippet is provided to provide a simple HTML structure to wrap the above values and can be added to any template using:
+
+```php
+<?php snippet('moon-phases') ?>
+```
 
 ## Disclaimer
 

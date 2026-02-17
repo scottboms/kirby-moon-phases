@@ -2,7 +2,7 @@
 	"name": "moon-phases",
 	"description": "Moon Phases",
 	"author": "Scott Boms <plugins@scottboms.com>",
-	"version": "1.0.0",
+	"version": "1.0.2",
 	"type": "kirby-plugin",
 	"license": "MIT",
 	"scripts": {
