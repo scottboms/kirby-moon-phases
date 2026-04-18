@@ -61,14 +61,30 @@ class IpGeolocationProvider implements ProviderInterface
 
       $date = (string)($payload['date'] ?? gmdate('Y-m-d'));
       $phaseLabel = (string)($payload['moon_phase'] ?? '');
-      $illuminationRaw = $payload['moon_illumination'] ?? null;
+      $illuminationRaw = $payload['moon_illumination_percentage'] ?? $payload['moon_illumination'] ?? null;
 
       return [
         'date' => $date,
         'phaseLabel' => $phaseLabel !== '' ? $phaseLabel : null,
-        'illumination' => $illuminationRaw !== null ? (float)$illuminationRaw : null,
+        'illumination' => $this->normalizeIllumination($illuminationRaw),
         'source' => 'ipgeolocation',
         'raw' => $payload,
       ];
+    }
+
+    private function normalizeIllumination(mixed $value): ?float
+    {
+        if (!is_numeric($value)) {
+            return null;
+        }
+
+        $illumination = (float)$value;
+
+        // Some payloads expose illumination as a fraction (0.21) instead of a percent (21.0).
+        if ($illumination >= 0.0 && $illumination <= 1.0) {
+            return $illumination * 100.0;
+        }
+
+        return $illumination;
     }
 }
