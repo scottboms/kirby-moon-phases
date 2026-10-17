@@ -2,7 +2,7 @@
 
 ![Plugin Preview](src/assets/moon-phases-plugin.jpg)
 
-A Kirby 5 plugin that provides moon phase information as a custom Panel Section (`type: moon-phases`) and to templates using Template Methods (`$site->moonPhases()` and helpers.
+A Kirby 6 plugin that provides moon phase information as a custom Panel Section (`type: moon-phases`) and to templates using Template Methods (`$site->moonPhases()` and helpers.
 
 
 ## Features
@@ -17,7 +17,7 @@ A Kirby 5 plugin that provides moon phase information as a custom Panel Section 
 
 ## Requirements
 
-- [**Kirby**](https://getkirby.com/) 5.x
+- [**Kirby**](https://getkirby.com/) 6.x
 - ipgeolocation.io API key
 
 

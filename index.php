@@ -26,8 +26,8 @@ require_once __DIR__ . '/src/MoonPhasesService.php';
 
 // kirby version check
 if (
-	version_compare(Kirby::version() ?? '0.0.0', '5.0.0', '<') ||
-	version_compare(Kirby::version() ?? '0.0.0', '6.0.0', '>=')
+	version_compare(Kirby::version() ?? '0.0.0', '6.0.0', '<') ||
+	version_compare(Kirby::version() ?? '0.0.0', '7.0.0', '>=')
 ) {
 	throw new Exception('Moon Phases requires Kirby v5');
 }
@@ -111,7 +111,7 @@ Kirby::plugin('scottboms/moon-phases', [
   ],
 
 	'info' => [
-		'version'  => '1.0.2',
+		'version'  => '6.0.0',
 		'homepage' => 'https://github.com/scottboms/kirby-moon-phases',
 		'license'  => 'MIT',
 		'authors'  => [[ 'name' => 'Scott Boms' ]],
