@@ -12,24 +12,26 @@
 
 declare(strict_types=1);
 
-use Kirby\Cms\App as Kirby;
+use Kirby\Cms\App as App;
 use ScottBoms\MoonPhases\IconResolver;
 use ScottBoms\MoonPhases\IpGeolocationProvider;
 use ScottBoms\MoonPhases\MoonMath;
 use ScottBoms\MoonPhases\MoonPhasesService;
+use ScottBoms\MoonPhases\MoonPhasesField;
 
 require_once __DIR__ . '/src/ProviderInterface.php';
 require_once __DIR__ . '/src/IpGeolocationProvider.php';
 require_once __DIR__ . '/src/IconResolver.php';
 require_once __DIR__ . '/src/MoonMath.php';
 require_once __DIR__ . '/src/MoonPhasesService.php';
+require_once __DIR__ . '/fields/MoonPhasesField.php';
 
-// kirby version check
+$version = App::version() ?? '0.0.0';
 if (
-	version_compare(Kirby::version() ?? '0.0.0', '6.0.0', '<') ||
-	version_compare(Kirby::version() ?? '0.0.0', '7.0.0', '>=')
+    version_compare($version, '6.0.0-beta.1', '<') ||
+    version_compare($version, '7.0.0', '>=')
 ) {
-	throw new Exception('Moon Phases requires Kirby v5');
+    throw new Exception('Moon Phases requires Kirby 6');
 }
 
 if (!function_exists('scottbomsMoonPhasesService')) {
@@ -48,72 +50,55 @@ if (!function_exists('scottbomsMoonPhasesService')) {
   }
 }
 
-Kirby::plugin('scottboms/moon-phases', [
-	'options' => [
-	],
-
-  'siteMethods' => [
-    'moonPhases' => function (): array {
-      return scottbomsMoonPhasesService($this->kirby())->getMoonData();
-    },
-    'moonPhase' => function (): ?string {
-      return $this->moonPhases()['phase'] ?? null;
-    },
-    'moonPhaseLabel' => function (): ?string {
-      return $this->moonPhases()['phaseLabel'] ?? null;
-    },
-    'moonIllumination' => function (int $precision = 0): ?float {
-      $value = $this->moonPhases()['illumination'] ?? null;
-      return $value === null ? null : round((float)$value, $precision);
-    },
-    'moonDaysUntilFullMoon' => function (int $precision = 1): ?float {
-      $value = $this->moonPhases()['daysUntilFullMoon'] ?? null;
-      return $value === null ? null : round((float)$value, $precision);
-    },
-    'moonDaysUntilNewMoon' => function (int $precision = 1): ?float {
-      $value = $this->moonPhases()['daysUntilNewMoon'] ?? null;
-      return $value === null ? null : round((float)$value, $precision);
-    },
-    'daysUntilFullMoon' => function (int $precision = 1): ?float {
-      return $this->moonDaysUntilFullMoon($precision);
-    },
-    'daysUntilNewMoon' => function (int $precision = 1): ?float {
-      return $this->moonDaysUntilNewMoon($precision);
-    },
-    'moonPhaseIcon' => function (): ?string {
-      return $this->moonPhases()['iconSvg'] ?? null;
-    },
+Kirby::plugin('scottboms/moon-phases',
+  info: [
+    'homepage' => 'https://github.com/scottboms/kirby-moon-phases',
+    'version'  => '6.0.0',
+    'license'  => 'MIT',
+    'authors'  => [[ 'name' => 'Scott Boms' ]],
   ],
+  extends: [
+    'options' => [],
 
-  'sections' => [
-    'moon-phases' => [
-      'props' => [
-        'title' => function (string $title = 'Moon Phases'): string {
-          return $title;
-        },
-        'showIllumination' => function (bool $showIllumination = true): bool {
-          return $showIllumination;
-        },
-        'precision' => function (int $precision = 1): int {
-          return max(0, min(4, $precision));
-        },
-      ],
-      'computed' => [
-        'moonData' => function (): array {
-          return scottbomsMoonPhasesService($this->model()->kirby())->getMoonData();
-        },
-      ],
+    'siteMethods' => [
+      'moonPhases' => function (): array {
+        return scottbomsMoonPhasesService($this->kirby())->getMoonData();
+      },
+      'moonPhase' => function (): ?string {
+        return $this->moonPhases()['phase'] ?? null;
+      },
+      'moonPhaseLabel' => function (): ?string {
+        return $this->moonPhases()['phaseLabel'] ?? null;
+      },
+      'moonIllumination' => function (int $precision = 0): ?float {
+        $value = $this->moonPhases()['illumination'] ?? null;
+        return $value === null ? null : round((float)$value, $precision);
+      },
+      'moonDaysUntilFullMoon' => function (int $precision = 1): ?float {
+        $value = $this->moonPhases()['daysUntilFullMoon'] ?? null;
+        return $value === null ? null : round((float)$value, $precision);
+      },
+      'moonDaysUntilNewMoon' => function (int $precision = 1): ?float {
+        $value = $this->moonPhases()['daysUntilNewMoon'] ?? null;
+        return $value === null ? null : round((float)$value, $precision);
+      },
+      'daysUntilFullMoon' => function (int $precision = 1): ?float {
+        return $this->moonDaysUntilFullMoon($precision);
+      },
+      'daysUntilNewMoon' => function (int $precision = 1): ?float {
+        return $this->moonDaysUntilNewMoon($precision);
+      },
+      'moonPhaseIcon' => function (): ?string {
+        return $this->moonPhases()['iconSvg'] ?? null;
+      },
     ],
-  ],
 
-  'snippets' => [
-    'moon-phases' => __DIR__ . '/snippets/moon-phases.php'
-  ],
+    'fields' => [
+      'moon-phases' => MoonPhasesField::class,
+    ],
 
-	'info' => [
-		'version'  => '6.0.0',
-		'homepage' => 'https://github.com/scottboms/kirby-moon-phases',
-		'license'  => 'MIT',
-		'authors'  => [[ 'name' => 'Scott Boms' ]],
-	]
-]);
+    'snippets' => [
+      'moon-phases' => __DIR__ . '/snippets/moon-phases.php'
+    ],
+  ]
+);
