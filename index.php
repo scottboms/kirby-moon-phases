@@ -111,7 +111,7 @@ Kirby::plugin('scottboms/moon-phases', [
   ],
 
 	'info' => [
-		'version'  => '1.0.3',
+		'version'  => '1.0.4',
 		'homepage' => 'https://github.com/scottboms/kirby-moon-phases',
 		'license'  => 'MIT',
 		'authors'  => [[ 'name' => 'Scott Boms' ]],
