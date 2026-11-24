@@ -2,7 +2,7 @@
 
 ![Plugin Preview](src/assets/moon-phases-plugin.jpg)
 
-A Kirby 5 plugin that provides moon phase information as a custom Panel Section (`type: moon-phases`) and to templates using Template Methods (`$site->moonPhases()` and helpers.
+A Kirby 6 plugin that provides moon phase information as a custom Panel Section (`type: moon-phases`) and to templates using Template Methods (`$site->moonPhases()` and helpers.
 
 
 ## Features
@@ -10,14 +10,14 @@ A Kirby 5 plugin that provides moon phase information as a custom Panel Section 
 - Current moon phase name
 - Number of days until the next full moon
 - Number of days until the next new moon
-- API-backed phase/illumination percentage data (ipgeolocation.io astronomy endpoint)
+- API-backed phase/illumination data (ipgeolocation.io astronomy endpoint)
 - Configurable cache
 - Customize SVG icons for moon phases (built-in preset or custom file map)
 
 
 ## Requirements
 
-- [**Kirby**](https://getkirby.com/) 5.x
+- [**Kirby**](https://getkirby.com/) 6.x
 - ipgeolocation.io API key
 
 
@@ -98,7 +98,7 @@ sections:
 
 ## Template Usage
 
-You can use the following site helper methods in your templates. Use `1` or `0` to set the precision level of the values returned. `moonIllumination()` returns a percentage value, so `0` means whole-percent rounding.
+You can use the following site helper methods in your templates. Use `1` or `0` to set the precision level of the values returned.
 
 ```php
 <?= $site->moonPhase() ?>
